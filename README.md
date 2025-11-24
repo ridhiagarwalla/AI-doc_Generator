@@ -1,334 +1,216 @@
-# AI-Assisted Document Authoring & Generation Platform
+AI-Assisted Document Authoring & Generation Platform
 
-A full-stack web application that allows authenticated users to generate, refine, and export structured business documents (Word .docx and PowerPoint .pptx) using AI-powered content generation.
+An end-to-end full-stack web application that lets authenticated users generate, refine, and export business documents using AI (Gemini / DeepSeek / Groq).
 
-## 🚀 Features
+Users can:
+✅ Create projects
+✅ Choose DOCX or PPTX
+✅ Define outlines / slide titles
+✅ Generate content using AI
+✅ Refine each section interactively
+✅ Export final .docx / .pptx files
+🚀 Features
+1. User Authentication
 
-- **User Authentication**: Secure JWT-based authentication system
-- **Project Management**: Create, view, update, and delete projects
-- **Document Configuration**: 
-  - Word Documents: Create custom outlines with section headers
-  - PowerPoint Presentations: Define slides with titles
-- **AI Content Generation**: Generate content using Google Gemini API
-- **Interactive Refinement**: 
-  - Refine content with AI prompts
-  - Like/Dislike feedback system
-  - Comment system for each section/slide
-- **Document Export**: Export final documents as .docx or .pptx files
-- **AI-Generated Templates**: Optional AI-suggested outlines
+JWT-based login & registration
 
-## 🛠️ Technology Stack
+Secure endpoints
 
-### Backend
-- **Framework**: FastAPI
-- **Database**: SQLite (via SQLAlchemy ORM)
-- **Authentication**: JWT (python-jose)
-- **AI Integration**: Google Gemini API
-- **Document Generation**: python-docx, python-pptx
+Each user sees ONLY their own projects
 
-### Frontend
-- **Framework**: React 19
-- **Build Tool**: Vite
-- **Styling**: Tailwind CSS
-- **Routing**: React Router DOM
-- **HTTP Client**: Axios
+2. Project Dashboard
 
-## 📋 Prerequisites
+View all created projects
 
-- Python 3.8+
-- Node.js 16+
-- npm or yarn
-- Google Gemini API Key ([Get one here](https://makersuite.google.com/app/apikey))
+Create new document configurations
 
-## 🔧 Installation & Setup
+3. Document Setup
 
-### Backend Setup
+Select Word (.docx) or PowerPoint (.pptx)
 
-1. **Navigate to backend directory**:
-   ```bash
-   cd backend
-   ```
+Add, edit, reorder section headers or slide titles
 
-2. **Create virtual environment**:
-   ```bash
-   python -m venv venv
-   ```
+(Optional) AI-Suggest Outline
 
-3. **Activate virtual environment**:
-   - Windows:
-     ```bash
-     venv\Scripts\activate
-     ```
-   - Linux/Mac:
-     ```bash
-     source venv/bin/activate
-     ```
+4. AI-Powered Content Generation
 
-4. **Install dependencies**:
-   ```bash
-   pip install -r requirements.txt
-   ```
+Uses LLM API (Gemini, DeepSeek, or Groq) to generate:
 
-5. **Create `.env` file**:
-   ```bash
-   cp .env.example .env
-   ```
+Section-wise content (for Word)
 
-6. **Update `.env` file** with your configuration:
-   ```env
-   JWT_SECRET=your-secret-key-change-this-in-production
-   JWT_ALGO=HS256
-   GEMINI_API_KEY=your-gemini-api-key-here
-   DATABASE_URL=sqlite:///./database.db
-   ```
+Slide-wise content (for PowerPoint)
 
-7. **Initialize database**:
-   ```bash
-   python -m app.init_db
-   ```
+5. Interactive Refinement Editor
 
-8. **Run the backend server**:
-   ```bash
-   uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
-   ```
+For each section/slide, users can:
 
-   The API will be available at `http://localhost:8000`
-   API documentation: `http://localhost:8000/docs`
+Enter refinement prompts
 
-### Frontend Setup
+Like / Dislike previous output
 
-1. **Navigate to frontend directory**:
-   ```bash
-   cd frontend
-   ```
+Add comments
 
-2. **Install dependencies**:
-   ```bash
-   npm install
-   ```
+Track refinement history
 
-3. **Create `.env` file**:
-   ```bash
-   cp .env.example .env
-   ```
+6. Export
 
-4. **Update `.env` file** (if needed):
-   ```env
-   VITE_API_URL=http://localhost:8000
-   ```
+Backend assembles a .docx or .pptx
 
-5. **Start development server**:
-   ```bash
-   npm run dev
-   ```
+Sends file for download
 
-   The frontend will be available at `http://localhost:5173`
+100% offline formatting using python-docx / python-pptx
 
-## 📖 Usage Guide
+🛠️ Tech Stack
+Frontend
 
-### 1. User Registration & Login
-- Navigate to the registration page
-- Create an account with your email and password
-- Login with your credentials
+React + Vite
 
-### 2. Create a Project
-- Click "Create New Project" on the dashboard
-- **Step 1**: Enter project title, description, and select document type (Word or PowerPoint)
-- **Step 2**: Enter the main topic/prompt for your document
-- **Step 3**: 
-  - **For Word**: Add section headers manually or use "AI Suggest Outline"
-  - **For PowerPoint**: Enter number of slides and slide titles
+Axios
 
-### 3. Generate Content
-- Open your project
-- Click "Generate Content" to generate AI content for all sections/slides
-- Wait for the generation to complete
+React Router
 
-### 4. Refine Content
-- For each section/slide:
-  - Enter a refinement prompt (e.g., "Make this more formal", "Convert to bullet points")
-  - Click "Refine" to update the content
-  - Use Like/Dislike buttons to provide feedback
-  - Add comments for notes
+Tailwind CSS / Custom UI
 
-### 5. Export Document
-- Click "Export DOCX" or "Export PPTX" button
-- The document will be downloaded automatically
+Backend
 
-## 🗂️ Project Structure
+FastAPI
 
-```
+JWT Authentication
+
+python-docx
+
+python-pptx
+
+LLM Integrations (Gemini / DeepSeek / Groq)
+
+Database
+
+SQLite / PostgreSQL (configurable)
+
+SQLAlchemy ORM
+
+📁 Folder Structure
 ai-doc-generator/
-├── backend/
+│── backend/
 │   ├── app/
-│   │   ├── __init__.py
-│   │   ├── main.py              # FastAPI app entry point
-│   │   ├── config.py             # Configuration
-│   │   ├── database.py           # Database setup
-│   │   ├── models.py             # SQLAlchemy models
-│   │   ├── schemas.py            # Pydantic schemas
-│   │   ├── init_db.py            # Database initialization
+│   │   ├── main.py
 │   │   ├── auth/
-│   │   │   ├── routes.py         # Authentication routes
-│   │   │   └── utils.py          # Auth utilities
-│   │   ├── projects_routes.py    # Project CRUD routes
-│   │   ├── document_routes.py    # Document generation & export routes
-│   │   └── services/
-│   │       └── gemini_service.py # Gemini API integration
+│   │   ├── projects/
+│   │   ├── models/
+│   │   ├── schemas/
+│   │   ├── database.py
+│   │   ├── utils/
+│   ├── venv/
 │   ├── requirements.txt
-│   ├── .env.example
-│   └── database.db               # SQLite database (created after init)
-│
-└── frontend/
-    ├── src/
-    │   ├── api/
-    │   │   └── axios.js          # Axios configuration
-    │   ├── components/
-    │   │   └── Navbar.jsx        # Navigation component
-    │   ├── pages/
-    │   │   ├── login.jsx         # Login page
-    │   │   ├── Register.jsx     # Registration page
-    │   │   ├── Dashboard.jsx     # Projects dashboard
-    │   │   ├── CreateProject.jsx # Project creation wizard
-    │   │   └── ProjectEditor.jsx # Content editor & refinement
-    │   ├── App.jsx               # Main app component
-    │   ├── main.jsx              # React entry point
-    │   └── index.css             # Global styles
-    ├── package.json
-    ├── tailwind.config.js
-    ├── postcss.config.js
-    ├── vite.config.js
-    └── .env.example
-```
+│   └── .env
 
-## 🌐 API Endpoints
+│── frontend/
+│   ├── src/
+│   │   ├── pages/
+│   │   ├── components/
+│   │   ├── api/
+│   │   ├── App.jsx
+│   ├── package.json
+│   ├── vite.config.js
+│   └── public/
 
-### Authentication
-- `POST /auth/register` - Register new user
-- `POST /auth/login` - Login user
-- `GET /auth/me` - Get current user (protected)
+│── README.md
 
-### Projects
-- `GET /projects` - Get all user projects (protected)
-- `POST /projects` - Create new project (protected)
-- `GET /projects/{id}` - Get project by ID (protected)
-- `PUT /projects/{id}` - Update project (protected)
-- `DELETE /projects/{id}` - Delete project (protected)
+🔧 Installation & Setup
+1. Clone the Repo
+git clone https://github.com/your-username/ai-doc-generator.git
+cd ai-doc-generator
 
-### Document Generation
-- `POST /projects/{id}/generate` - Generate content for all sections (protected)
-- `POST /projects/{id}/generate_section` - Generate content for single section (protected)
-- `POST /projects/{id}/refine` - Refine section content (protected)
-- `POST /projects/{id}/feedback` - Submit feedback/comment (protected)
-- `POST /projects/{id}/ai-outline` - Generate AI outline (protected)
-- `GET /projects/{id}/export/docx` - Export as Word document (protected)
-- `GET /projects/{id}/export/pptx` - Export as PowerPoint (protected)
+🖥️ Backend Setup (FastAPI)
+2. Create Virtual Environment
+cd backend
+python -m venv venv
+venv\Scripts\activate   # Windows
+# or
+source venv/bin/activate  # Mac/Linux
 
-## 🚀 Deployment
+3. Install Python Dependencies
+pip install -r requirements.txt
 
-### Backend Deployment (Render)
+🔐 Environment Variables (backend/.env)
 
-1. **Create a new Web Service** on [Render](https://render.com)
+Create a .env file inside backend/:
 
-2. **Connect your GitHub repository**
+SECRET_KEY=your_jwt_secret
+ALGORITHM=HS256
 
-3. **Configure build settings**:
-   - **Build Command**: `pip install -r requirements.txt`
-   - **Start Command**: `uvicorn app.main:app --host 0.0.0.0 --port $PORT`
+# Choose one of these ↓↓↓
+GEMINI_API_KEY=your_key_here
+DEEPSEEK_API_KEY=your_key_here
+GROQ_API_KEY=your_key_here
 
-4. **Add Environment Variables**:
-   - `JWT_SECRET`: Your secret key
-   - `JWT_ALGO`: HS256
-   - `GEMINI_API_KEY`: Your Gemini API key
-   - `DATABASE_URL`: sqlite:///./database.db (or use PostgreSQL)
+LLM_PROVIDER=gemini   # or deepseek or groq
 
-5. **Deploy**
+▶️ Start Backend Server
+uvicorn app.main:app --reload
 
-### Frontend Deployment (Vercel)
 
-1. **Install Vercel CLI**:
-   ```bash
-   npm i -g vercel
-   ```
+Backend runs at:
+👉 http://127.0.0.1:8000
 
-2. **Navigate to frontend directory**:
-   ```bash
-   cd frontend
-   ```
+Swagger docs:
+👉 http://127.0.0.1:8000/docs
 
-3. **Deploy**:
-   ```bash
-   vercel
-   ```
+🖥️ Frontend Setup (React + Vite)
+1. Install Node dependencies
+cd ../frontend
+npm install
 
-4. **Set Environment Variables** in Vercel dashboard:
-   - `VITE_API_URL`: Your Render backend URL (e.g., `https://your-backend.onrender.com`)
+2. Create config file
 
-5. **Redeploy** after setting environment variables
+Create: frontend/src/api/config.js
 
-### Alternative: Netlify
+export const API_BASE_URL = "http://127.0.0.1:8000";
 
-1. **Build the project**:
-   ```bash
-   cd frontend
-   npm run build
-   ```
+3. Run Frontend
+npm run dev
 
-2. **Deploy to Netlify**:
-   - Drag and drop the `dist` folder to Netlify
-   - Or connect GitHub repository
 
-3. **Set Environment Variables**:
-   - `VITE_API_URL`: Your backend URL
+Frontend available at:
+👉 http://localhost:5173
 
-## 🔒 Security Notes
+📦 Build for Production
+npm run build
 
-- Change `JWT_SECRET` to a strong random string in production
-- Use environment variables for all sensitive data
-- Consider using PostgreSQL instead of SQLite for production
-- Implement rate limiting for API endpoints
-- Add CORS configuration for production domains only
+🎥 Demo Video Requirements
 
-## 🐛 Troubleshooting
+Your final submission must include a demo video showing:
 
-### Backend Issues
+✔ User Registration & Login
+✔ Create Word document
+✔ Create PowerPoint document
+✔ AI content generation
+✔ Refinement (like/dislike, comments, revise text)
+✔ Export DOCX
+✔ Export PPTX
 
-1. **Database not found**:
-   - Run `python -m app.init_db` to initialize the database
+📌 API Usage Notes
+Gemini API
 
-2. **Gemini API errors**:
-   - Verify your `GEMINI_API_KEY` is correct
-   - Check API quota limits
+Google now requires billing enabled to generate a valid key.
 
-3. **Import errors**:
-   - Ensure virtual environment is activated
-   - Reinstall dependencies: `pip install -r requirements.txt`
+DeepSeek API (Recommended Free Option)
 
-### Frontend Issues
+No card needed, unlimited free usage.
+https://platform.deepseek.com/api_keys
 
-1. **API connection errors**:
-   - Verify backend is running on port 8000
-   - Check `VITE_API_URL` in `.env` file
-   - Check CORS settings in backend
+Groq API (Free Fast Llama)
 
-2. **Build errors**:
-   - Delete `node_modules` and reinstall: `rm -rf node_modules && npm install`
+https://console.groq.com/keys
 
-## 📝 License
+🧪 Future Improvements
 
-This project is open source and available under the MIT License.
+Realtime collaboration
 
-## 🤝 Contributing
+Auto-saving
 
-Contributions are welcome! Please feel free to submit a Pull Request.
+Custom templates
 
-## 📧 Support
+PDF export
 
-For issues and questions, please open an issue on the GitHub repository.
-
----
-
-**Built with ❤️ using FastAPI, React, and Google Gemini API**
-
-#   A I - d o c _ G e n e r a t o r  
- 
+Multi-language support
